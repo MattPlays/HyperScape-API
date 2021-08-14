@@ -1,0 +1,27 @@
+{
+  "name": "@mattplays/hyperscape-api",
+  "version": "0.0.1",
+  "description": "This package is a wrapper for the unofficial HyperScape API",
+  "main": "HyperScapeAPI.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattPlays/HyperScape-API.git"
+  },
+  "keywords": [
+    "HyperScape",
+    "API",
+    "GameAPICenter"
+  ],
+  "author": "MattPlays (https://github.com/MattPlays/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MattPlays/HyperScape-API/issues"
+  },
+  "homepage": "https://github.com/MattPlays/HyperScape-API#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
