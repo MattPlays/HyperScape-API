@@ -21,8 +21,8 @@
 **This is an Unoffical API** [Unoffical Docs](https://tracker.gg/developers/docs/titles/hyper-scape)
 ### Usage <a id="hyperscape-usage">
 ```javascript
-const GameAPICenter = require("gameapicenter");
-const HyperScapeAPI = new GameAPICenter.HyperScapeAPI("DUMMYAUTHKEY");
+const {HyperScapeAPI} = require("@mattplays/hyperscape-api");
+const API = new HyperScapeAPI("DUMMYAPIKEY");
 ```
 ### Functions <a id="hyperscape-functions">
 #### GetPlayerProfile <a id="hyperscape-getplayerprofile">
@@ -40,7 +40,8 @@ export type platform = "uplay" | "psn" | "xbl"
 The GetPlayerProfile function returns a `Promise<Profile>` type
 ##### Usage <a id="hyperscape-getplayerprofile-usage">
 ```javascript
-const HyperScapeAPI = new GameAPICenter.HyperScapeAPI("DUMMYAUTHKEY");
+const {HyperScapeAPI} = require("@mattplays/hyperscape-api");
+const API = new HyperScapeAPI("DUMMYAPIKEY");
 HyperScapeAPI.GetPlayerProfile("uplay", "DUMMY-PLATFORM-IDENTIFIER").then((data) => {
 // Your Code Here :D
 });
