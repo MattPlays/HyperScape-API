@@ -1,5 +1,13 @@
-const fetch = require("node-fetch")
 class platformInfo {
+    /**
+     * 
+     * @param {string} platformSlug 
+     * @param {number | null} platformUserId 
+     * @param {string} platformUserHandle 
+     * @param {string} platformUserIdentifier 
+     * @param {string} avatarUrl 
+     * @param {null} additionalParameters 
+     */
     constructor(platformSlug, platformUserId, platformUserHandle, platformUserIdentifier, avatarUrl, additionalParameters) {
         this.platformSlug = platformSlug;
         this.platformUserId = platformUserId;
@@ -10,6 +18,13 @@ class platformInfo {
     };
 }
 class SocialAccount {
+    /**
+     * 
+     * @param {string} platformSlug 
+     * @param {string} platformUserHandle 
+     * @param {string} platformUserIdentifier 
+     * @returns {SocialAccount} 
+     */
     constructor(platformSlug, platformUserHandle, platformUserIdentifier) {
         this.platformSlug = platformSlug;
         this.platformUserHandle = platformUserHandle;
@@ -17,6 +32,21 @@ class SocialAccount {
     };
 }
 class userInfo {
+    /**
+     * 
+     * @param {number} userId 
+     * @param {boolean} isPremium 
+     * @param {boolean} isVerified 
+     * @param {boolean} isInfluencer 
+     * @param {boolean} isPartner 
+     * @param {string} countryCode 
+     * @param {string} customAvatarUrl 
+     * @param {string | null} customHeroUrl 
+     * @param {SocialAccount[]} socialAccounts 
+     * @param {number | null} pageviews 
+     * @param {boolean | null} isSuspicious 
+     * @returns {userInfo}
+     */
     constructor(userId, isPremium, isVerified, isInfluencer, isPartner, countryCode, customAvatarUrl, customHeroUrl, socialAccounts, pageviews, isSuspicious) {
         this.userId = userId;
         this.isPremium = isPremium;
@@ -26,16 +56,26 @@ class userInfo {
         this.countryCode = countryCode;
         this.customAvatarUrl = customAvatarUrl;
         this.customHeroUrl = customHeroUrl;
-        this.socialAccounts = [];
-        socialAccounts.forEach((d) => {
-            this.socialAccounts.push(new SocialAccount(d.platformSlug, d.platformUserHandle, d.platformUserIdentifier));
-        })
+        this.socialAccounts = socialAccounts.map((d) => {return new SocialAccount(d.platformSlug, d.platformUserHandle, d.platformUserIdentifier)});
         this.pageviews = pageviews;
         this.isSuspicious = isSuspicious;
     };
 }
 
 class Stat {
+    /**
+     * 
+     * @param {null} rank 
+     * @param {null} percentile 
+     * @param {string} displayName 
+     * @param {string} displayCategory 
+     * @param {string} category 
+     * @param {{}} metadata 
+     * @param {number} value 
+     * @param {string} displayValue 
+     * @param {string} displayType
+     * @returns {Stat} 
+     */
     constructor(rank, percentile, displayName, displayCategory, category, metadata, value, displayValue, displayType) {
         this.rank = rank;
         this.percentile = percentile;
@@ -63,6 +103,11 @@ class Segment {
     };
 }
 class Profile {
+    /**
+     * 
+     * @param {object} data
+     * @returns {Profile} 
+     */
     constructor(data) {
         this.data = {
             platformInfo: new platformInfo((data.platformInfo.platformSlug) ?? "", (data.platformInfo.platformUserId) ?? "", (data.platformInfo.platformUserHandle) ?? "", (data.platformInfo.platformUserIdentifier) ?? "", (data.platformInfo.avatarUrl) ?? "", (data.platformInfo.additionalParameters) ?? ""),
@@ -73,37 +118,10 @@ class Profile {
                     displayValue: data.metadata.lastUpdated.displayValue ?? "",
                 },
             },
-            segments: [],
+            segments: data.segments.map((segment) => {return new Segment((segment.type) ?? "", (segment.attributes) ?? {}, (segment.metadata) ?? {}, (segment.expiryDate) ?? "", (segment.stats) ?? {})}),
             availableSegments: data.availableSegments,
             expiryDate: data.expiryDate,
         };
-        data.segments.forEach((segment) => {
-            this.data.segments.push(new Segment((segment.type) ?? "", (segment.attributes) ?? {}, (segment.metadata) ?? {}, (segment.expiryDate) ?? "", (segment.stats) ?? {}));
-        });
     }
 }
-class HyperScapeAPI {
-    constructor(authKey) {
-        this.api = "https://public-api.tracker.gg/v2/hyper-scape/standard/"
-        this.authKey = authKey
-        this.offical = false
-    }
-    GetPlayerProfile(platform = "uplay", platformIdentifer) {
-        return new Promise(async(resolve, reject) => {
-            let url = this.api + `profile/${platform}/${platformIdentifer}`
-            await fetch(url, {
-                "headers": {
-                    "TRN-Api-Key": this.authKey,
-                    "Accept": "application/json",
-                },
-                "method": "GET",
-                "mode": "cors"
-            }).then(res => res.json()).then((data) => {
-                resolve(new Profile(data.data))
-            }).catch(reject)
-        })
-    }
-}
-module.exports = {
-    HyperScapeAPI: HyperScapeAPI
-}
+module.exports = Profile;

@@ -1,4 +1,4 @@
-export type platformInfo = {
+interface platformInfo {
     platformSlug: string,
     platformUserId: string,
     platformUserHandle: string,
@@ -6,12 +6,12 @@ export type platformInfo = {
     avatarUrl: string,
     additionalParameters: string[];
 }
-export type SocialAccount = {
+interface SocialAccount {
     platformSlug: string,
     platformUserHandle: string,
     platformUserIdentifier: string
 }
-export type userInfo = {
+interface userInfo {
     userId: number,
     isPremium: boolean,
     isVerified: boolean,
@@ -24,7 +24,7 @@ export type userInfo = {
     pageviews: number,
     isSuspicious: boolean;
 }
-export type Stat = {
+interface Stat {
     rank: string;
     percentile: number;
     displayName: string;
@@ -33,10 +33,10 @@ export type Stat = {
     metadata: [];
     value: number;
     displayValue: string;
-    displayType: string;
+    displayinterface: string;
 }
-export type Segment = {
-    type: string,
+interface Segment {
+    interface: string,
     attributes: {},
     metadata: {name: string},
     expiryDate: string,
@@ -88,7 +88,7 @@ export type Segment = {
         otherDamageDone: Stat
     }
 }
-export type Profile = {
+export interface Profile {
     data: {
         platformInfo: platformInfo,
         userInfo: userInfo,
@@ -102,9 +102,4 @@ export type Profile = {
     segments: Segment[],
     availableSegments: [],
     expiryDate: string,
-}
-export type platform = "uplay" | "psn" | "xbl"
-export class HyperScapeAPI {
-    constructor(authKey: string);
-    GetPlayerProfile(platform: platform, platformIdentifier: string): Promise<Profile>;
 }
