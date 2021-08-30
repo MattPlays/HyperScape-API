@@ -1,6 +1,6 @@
 {
   "name": "@mattplays/hyperscape-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This package is a wrapper for the unofficial HyperScape API",
   "main": "src/index.js",
   "types": "types/index.d.ts",
